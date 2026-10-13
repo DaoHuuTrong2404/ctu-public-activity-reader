@@ -1,0 +1,25 @@
+{
+  "checkedAt": "2026-10-13T09:03:51.552Z",
+  "scans": [
+    {
+      "sourceUrl": "https://www.facebook.com/CTU.dtn.cntttt",
+      "state": "ok",
+      "postCount": 5
+    },
+    {
+      "sourceUrl": "https://www.facebook.com/khmt.dhct",
+      "state": "ok",
+      "postCount": 5
+    },
+    {
+      "sourceUrl": "https://www.facebook.com/CTU.Youth",
+      "state": "ok",
+      "postCount": 5
+    },
+    {
+      "sourceUrl": "https://www.facebook.com/CTU.dtn.kt/",
+      "state": "ok",
+      "postCount": 5
+    }
+  ]
+}
