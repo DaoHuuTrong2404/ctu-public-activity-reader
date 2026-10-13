@@ -1,0 +1,23 @@
+name: Read public CTU activities
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '3-58/5 * * * *'
+permissions:
+  contents: read
+concurrency:
+  group: public-school-reader
+  cancel-in-progress: false
+jobs:
+  read:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+      - name: Read public widgets and deliver source snapshot
+        env:
+          SOURCE_FEED_URL: ${{ vars.SOURCE_FEED_URL }}
+          SOURCE_FEED_KEY: ${{ secrets.SOURCE_FEED_KEY }}
+        run: node read-public.mjs
