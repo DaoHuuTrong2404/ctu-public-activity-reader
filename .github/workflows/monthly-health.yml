@@ -1,0 +1,27 @@
+name: Record monthly public source health
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 5 1 * *'
+permissions:
+  contents: write
+concurrency:
+  group: monthly-public-source-health
+  cancel-in-progress: false
+jobs:
+  health:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - name: Read public source health
+        run: |
+          node read-public.mjs || test -f public-feed.json
+          node --input-type=module -e "import fs from 'node:fs'; const report=JSON.parse(fs.readFileSync('public-feed.json')); fs.writeFileSync('public-health.json',JSON.stringify({checkedAt:report.fetchedAt,scans:report.scans.map(({sourceUrl,state,postCount,error})=>({sourceUrl,state,postCount,error}))},null,2)+'\n');"
+      - name: Record the actual public health report
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- public-health.json
+          git diff --cached --quiet || git commit -m 'docs: record monthly public source health'
+          git push origin HEAD:main
