@@ -1,13 +1,19 @@
 name: Read public CTU activities
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/read-public.yml'
+      - 'read-public.mjs'
+      - 'facebook.mjs'
   schedule:
-    - cron: '4,9,14,19,24,29,34,39,44,49,54,59 * * * *'
+    - cron: '2-57/5 * * * *'
 permissions:
   contents: read
 concurrency:
   group: public-school-reader
-  cancel-in-progress: false
+  cancel-in-progress: true
 jobs:
   read:
     runs-on: ubuntu-latest
